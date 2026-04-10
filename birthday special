@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rocky Says Happy Birthday</title>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: radial-gradient(circle at top, #0b0f2a, #000);
+      color: white;
+    }
+
+    h1 {
+      margin-top: 30px;
+      font-size: 2.5em;
+    }
+
+    p {
+      font-size: 1.4em;
+    }
+
+    .emoji {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px 25px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      background-color: #6c5ce7;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #5a4bd1;
+    }
+
+    #rocky {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: bottom 0.3s ease;
+    }
+
+    .body {
+      width: 90px;
+      height: 90px;
+      background: #8b5a2b;
+      border-radius: 50%;
+      position: relative;
+      margin: auto;
+      box-shadow: 0 0 20px #8b5a2b;
+    }
+
+    .eye {
+      width: 14px;
+      height: 14px;
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .eye:nth-child(1) { top: 20px; left: 20px; }
+    .eye:nth-child(2) { top: 20px; right: 20px; }
+
+    .leg {
+      width: 8px;
+      height: 45px;
+      background: #8b5a2b;
+      position: absolute;
+      bottom: -35px;
+      border-radius: 10px;
+    }
+
+    .leg.l1 { left: 5px; }
+    .leg.l2 { left: 20px; }
+    .leg.l3 { left: 35px; }
+    .leg.l4 { right: 35px; }
+    .leg.l5 { right: 20px; }
+    .leg.l6 { right: 5px; }
+
+    .star {
+      position: absolute;
+      color: white;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.2; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- 🔐 PASSWORD PROTECTION -->
+<script>
+  const password = "rocky123"; // CHANGE THIS!
+
+  let entered = prompt("Enter password to view Rocky's message:");
+
+  if (entered !== password) {
+    document.body.innerHTML = "<h1>Access Denied 🚫</h1>";
+  }
+</script>
+
+  <h1>🎉 Rocky Says Happy Birthday, Philip! 🎉</h1>
+  <p>May this day be amaze amaze amaze</p>
+  <div class="emoji">👎</div>
+
+  <button onclick="jump()">Make Rocky Jump 🚀</button>
+
+  <div id="rocky">
+    <div class="body">
+      <div class="eye"></div>
+      <div class="eye"></div>
+
+      <div class="leg l1"></div>
+      <div class="leg l2"></div>
+      <div class="leg l3"></div>
+      <div class="leg l4"></div>
+      <div class="leg l5"></div>
+      <div class="leg l6"></div>
+    </div>
+  </div>
+
+  <div class="star" style="top:10%; left:20%;">✨</div>
+  <div class="star" style="top:30%; left:70%;">✨</div>
+  <div class="star" style="top:60%; left:40%;">✨</div>
+  <div class="star" style="top:80%; left:80%;">✨</div>
+
+  <script>
+    function playBlip() {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+      function beep(freq, duration) {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.frequency.value = freq;
+        osc.type = "sine";
+
+        osc.start();
+
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+        osc.stop(audioCtx.currentTime + duration);
+      }
+
+      beep(600, 0.15);
+      setTimeout(() => beep(900, 0.15), 180);
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 40; i++) {
+        const confetti = document.createElement("div");
+
+        confetti.innerText = "🎊";
+        confetti.style.position = "absolute";
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.top = "0px";
+        confetti.style.fontSize = (Math.random() * 20 + 20) + "px";
+
+        document.body.appendChild(confetti);
+
+        let fall = setInterval(() => {
+          let top = parseFloat(confetti.style.top);
+          confetti.style.top = top + 5 + "px";
+        }, 30);
+
+        setTimeout(() => {
+          clearInterval(fall);
+          confetti.remove();
+        }, 2000);
+      }
+    }
+
+    function jump() {
+      const rocky = document.getElementById("rocky");
+
+      playBlip();
+      createConfetti();
+
+      rocky.style.bottom = "180px";
+
+      setTimeout(() => {
+        rocky.style.bottom = "60px";
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
